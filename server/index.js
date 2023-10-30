@@ -2,19 +2,69 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const db = require('./db');
-const todo = require("./database");
-
+const TodoItem = require("./todoItemDatabase");
+const TodoList = require("./todoListDatabase")
 
 app.use(cors());
 app.use(express.json()); //req.body
 
 //ROUTES
 
-//get all todos
+
+//create todolist
+app.post('/todo-lists', async (req, res) => {
+    try {
+      const { title } = req.body;
+      const newTodoList = await TodoList.create({ title });
+      res.json(newTodoList);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ error: 'Server Error' });
+    }
+  });
+
+//get whole todolist
+app.get("/todo-lists", async (req, res) => {
+    try {
+        const allTodosList = await TodoList.findAll();
+
+        res.json(allTodosList);
+    } catch (error) {
+        console.error(error.message);
+      res.status(500).json({ error: 'Server Error' });
+    }
+});
+
+// Create a new TodoItem and associate it with a TodoList
+app.post('/todo-lists/:listId/todos', async (req, res) => {
+    try {
+      const { listId } = req.params;
+      const { description } = req.body;
+  
+      const todoList = await TodoList.findByPk(listId);
+  
+      if (!todoList) {
+        return res.status(404).json('Todo List not found');
+      }
+      const newTodoItem = await TodoItem.create({ 
+        description : description,
+        todoListId: listId
+      });
+      console.log(newTodoItem.description);
+      await newTodoItem.setTodoList(todoList);
+  
+      res.json(newTodoItem);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ error: 'Server Error' });
+    }
+  });
+
+//get all todoitems
 
 app.get("/todos", async (req, res) => {
     try {
-        const allTodos = await todo.findAll();
+        const allTodos = await TodoItem.findAll();
 
         res.json(allTodos);
     } catch (err) {
@@ -22,14 +72,14 @@ app.get("/todos", async (req, res) => {
     }
 });
 
-//get a todo
+//get a todoitems
 
 app.get('/todos/:id', async (req, res) => {
     try {
         // console.log(req.params);
       const { id } = req.params;
       // Retrieve the Todo with a specific ID from the database
-      const todoquery = await todo.findOne({
+      const todoquery = await TodoItem.findOne({
         where: {
           todo_id: id
         }
@@ -42,12 +92,12 @@ app.get('/todos/:id', async (req, res) => {
     }
   });
 
-//create a todo
+//create a todoitem
 app.post("/todos" , async (req, res) => {
     try {
 
         const {description} = req.body;
-        const newTodo = await todo.create({
+        const newTodo = await TodoItem.create({
             description: description
         });
         console.log(newTodo.todo_id)
@@ -57,7 +107,7 @@ app.post("/todos" , async (req, res) => {
         console.error(err.message);
     }
 });
-//update a todo
+//update a todoitem
 
 app.put('/todos/:id', async (req, res) => {
     try {
@@ -65,7 +115,7 @@ app.put('/todos/:id', async (req, res) => {
       const { description } = req.body;
   
       // Update the description for a Todo with a specific ID
-      const [updatedRowsCount] = await todo.update(
+      const [updatedRowsCount] = await TodoItem.update(
         { description: description },
         {
           where: { todo_id: id }
@@ -83,13 +133,13 @@ app.put('/todos/:id', async (req, res) => {
     }
   });
 
-//delete a todo
+//delete a todoitem
 app.delete('/todos/:id', async (req, res) => {
     try {
       const { id } = req.params;
   
       // Delete the Todo with a specific ID
-      const deletedRowsCount = await todo.destroy({
+      const deletedRowsCount = await TodoItem.destroy({
         where: {
           todo_id: id
         }
