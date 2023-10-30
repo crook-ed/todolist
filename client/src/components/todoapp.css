@@ -1,0 +1,59 @@
+/* Styles for the Todo List table */
+.todo-app {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .todo-list {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 300px;
+  }
+  
+  .todo-list-header {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .todo-items {
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+    padding: 8px;
+    list-style: none;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  
+  .todo-item {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .todo-item-description {
+    flex: 1;
+    margin-bottom: 8px;
+  }
+  
+  .add-todo-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
