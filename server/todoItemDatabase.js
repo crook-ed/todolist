@@ -14,7 +14,7 @@ const todos = pool.define('todos' , {
         type: Sequelize.STRING,
     },
 
-    todoListId: {
+    todolistid: {
       type: Sequelize.BIGINT, // Or the appropriate data type matching the TodoList's primary key
       allowNull: false,
       references: {
@@ -25,11 +25,11 @@ const todos = pool.define('todos' , {
 });
 
 todos.belongsTo(TodoList, {
-  foreignKey: 'todoListId' // Assuming 'todoListId' is the foreign key in todos referencing TodoList
+  foreignKey: 'todolistid' // Assuming 'todoListId' is the foreign key in todos referencing TodoList
 });
 
 TodoList.hasMany(todos, {
-  foreignKey: 'todoListId' // Assuming 'todoListId' is the foreign key in TodoItem
+  foreignKey: 'todolistid' // Assuming 'todoListId' is the foreign key in TodoItem
 });
 
 todos.sync().then(() => {

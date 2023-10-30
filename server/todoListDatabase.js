@@ -5,6 +5,13 @@ const TodoItem = require('./todoItemDatabase');
 
 const TodoList = pool.define('todoLists', {
     
+  id: {
+    type: Sequelize.BIGINT,
+    // or Sequelize.BIGINT
+    primaryKey: true,
+    autoIncrement: true,
+  },
+
 
   title: {
     type: Sequelize.STRING,

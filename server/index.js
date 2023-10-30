@@ -24,17 +24,16 @@ app.post('/todo-lists', async (req, res) => {
   });
 
 //get whole todolist
-app.get("/todo-lists", async (req, res) => {
-    try {
-        const allTodosList = await TodoList.findAll();
-
-        res.json(allTodosList);
-    } catch (error) {
-        console.error(error.message);
-      res.status(500).json({ error: 'Server Error' });
-    }
+app.get('/todolists', async (req, res) => {
+  try {
+    const todoLists = await TodoList.findAll({
+      include: { model: TodoItem }
+    });
+    res.json(todoLists);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
-
 // Create a new TodoItem and associate it with a TodoList
 app.post('/todo-lists/:listId/todos', async (req, res) => {
     try {
@@ -48,9 +47,9 @@ app.post('/todo-lists/:listId/todos', async (req, res) => {
       }
       const newTodoItem = await TodoItem.create({ 
         description : description,
-        todoListId: listId
+        todolistid: listId
       });
-      console.log(newTodoItem.description);
+      // console.log(newTodoItem.description);
       await newTodoItem.setTodoList(todoList);
   
       res.json(newTodoItem);
@@ -59,6 +58,24 @@ app.post('/todo-lists/:listId/todos', async (req, res) => {
       res.status(500).json({ error: 'Server Error' });
     }
   });
+
+//move a todoitem to another todolist
+app.put('/todos/:todoId/move', async (req, res) => {
+  const { targetTodoListId } = req.body;
+  const { todoId } = req.params;
+  console.log(targetTodoListId);
+  try {
+    const todoItem = await TodoItem.findByPk(todoId);
+    if (todoItem) {
+      todoItem.update({ todolistid: targetTodoListId });
+      res.json({ message: 'TodoItem moved successfully!' });
+    } else {
+      res.status(404).json({ message: 'TodoItem not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 //get all todoitems
 
