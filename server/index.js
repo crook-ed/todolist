@@ -125,7 +125,6 @@ app.post("/todos" , async (req, res) => {
     }
 });
 //update a todoitem
-
 app.put('/todos/:id', async (req, res) => {
     try {
       const { id } = req.params;
