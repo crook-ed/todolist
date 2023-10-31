@@ -2,25 +2,31 @@ import React, {useState} from 'react';
 import { Modal, Button } from 'antd';
 
 
-const AddTodoListItem = ({ isModalVisible, handleCancel }) => {
+const AddTodoListItem = ({ isModalVisible, handleCancel, passedValue }) => {
     const [title, setDescription] = useState("");
 
  
-    const handleAdd = async e => {
-        e.preventDefault();
-    try {
-      const body = { title };
-      const response = await fetch("http://localhost:5000/todo-lists", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-
-      window.location = "/";
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
+    const handleAdd = async (e) => {
+      e.preventDefault();
+      try {
+        const response = await fetch(`http://localhost:5000/todo-lists/${passedValue}/todos`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ description: title })
+        });
+  
+        if (response.ok) {
+          // The item has been successfully added
+          // You might want to handle the response data here
+          window.location.reload(); // Refresh the page or update the state to show the new todo item
+        } else {
+          console.error('Failed to add a new todo item');
+        }
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+  
 
 
 
