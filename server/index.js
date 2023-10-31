@@ -77,18 +77,30 @@ app.put('/todos/:todoId/move', async (req, res) => {
   }
 });
 
-//get all todoitems
+//get all todoitems specific to todolist.id
 
-app.get("/todos", async (req, res) => {
-    try {
-        const allTodos = await TodoItem.findAll();
+app.get('/todolist/:id/todos', async (req, res) => {
+  try {
+    const todoListId = req.params.id; // Extract the TodoList ID from the request parameters
 
-        res.json(allTodos);
-    } catch (err) {
-        console.error(err.message);
-    }
+    const todosForTodoList = await TodoItem.findAll({
+      where: {
+        todolistid: todoListId // Filter by the TodoList ID
+      },
+      include: [
+        {
+          model: TodoList, // Include the TodoList model to retrieve additional details if needed
+          attributes: ['id', 'title'] // You can specify the attributes you want to retrieve for the TodoList
+        }
+      ]
+    });
+
+    res.json(todosForTodoList); // Send the fetched todos in the response
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Server Error' });
+  }
 });
-
 //get a todoitems
 
 app.get('/todos/:id', async (req, res) => {

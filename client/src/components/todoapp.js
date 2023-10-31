@@ -41,55 +41,39 @@ const TodoApp = () => {
   }, []);
 
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/todos')
-      .then((response) => {
-        setTodos(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching todo items:', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('http://localhost:5000/todos')
+  //     .then((response) => {
+  //       setTodos(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching todo items:', error);
+  //     });
+  // }, []);
  
 
   return (
     <div className="todo-app">
       <table className="todo-table">
-        
-        <thead className="todo-items">
-          {todoLists.map((list) => (
-            <tr className="todo-item" key={list.id}>
-              <td className="todo-item-description">{list.title}</td>
-            </tr>
-          ))}
-        </thead>
-        <tbody className="todo-items">
-        <tr className="todo-items">
-        {todoLists.map((list) => (
-          <td className="todo-item" key={list.id}>
-            {/* Your todo items for each list */}
-            {todos.items.map((item) => (
-              <div className="item" key={item.id}>
-                {item.description}
-              </div>
+        <thead>
+          <tr>
+            {todoLists.map((list) => (
+              <th key={list.id}>{list.title}</th>
             ))}
-          </td>
-        ))}
-      </tr>
-          {/* {todos.map(todo => (
-            <tr className="todo-item" key={todo.todo_id}>
-              <td >{todo.description}</td>
-              
-              <td>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => deleteTodo(todo.todo_id)}
-                >
-                  Delete
-                </button>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {todoLists.map((list) => (
+              <td key={list.id}>
+                <ul>
+                  {list.todos.map((todo) => (
+                    <li key={todo.todo_id}>{todo.description}</li>
+                  ))}
+                </ul>
               </td>
-            </tr>
-          ))} */}
+            ))}
+          </tr>
         </tbody>
       </table>
       <button className="add-list-btn" onClick={showModal}>
