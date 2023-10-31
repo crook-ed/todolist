@@ -18,15 +18,30 @@ const TodoApp = () => {
   };
  
 
-  const deleteTodo = async id => {
-    try {
-      const deleteTodo = await fetch(`http://localhost:5000/todos/${id}`, {
-        method: "DELETE"
-      });
+  // const deleteTodo = async id => {
+  //   try {
+  //     const deleteTodo = await fetch(`http://localhost:5000/todos/${id}`, {
+  //       method: "DELETE"
+  //     });
 
-      setTodos(todos.filter(todo => todo.todo_id !== id));
-    } catch (err) {
-      console.error(err.message);
+  //     setTodos(todos.filter(todo => todo.todo_id !== id));
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // };
+
+  const handleTodoChange = async (todoId) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/todos/${todoId}`);
+      if (response.status === 200) {
+        const updatedTodoLists = todoLists.map(list => ({
+          ...list,
+          todos: list.todos.filter(todo => todo.todo_id !== todoId)
+        }));
+        setTodoLists(updatedTodoLists);
+      }
+    } catch (error) {
+      console.error('Error deleting todo item:', error);
     }
   };
   
@@ -41,15 +56,15 @@ const TodoApp = () => {
   }, []);
 
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:5000/todos')
-  //     .then((response) => {
-  //       setTodos(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching todo items:', error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios.get('http://localhost:5000/todos')
+      .then((response) => {
+        setTodos(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching todo items:', error);
+      });
+  }, []);
  
 
   return (
@@ -66,9 +81,14 @@ const TodoApp = () => {
           <tr>
             {todoLists.map((list) => (
               <td key={list.id}>
-                <ul>
+                <ul className="ul">
                   {list.todos.map((todo) => (
-                    <li key={todo.todo_id}>{todo.description}</li>
+                    <li key={todo.todo_id}>
+                      <input
+                        type="checkbox"
+                        onChange={() => handleTodoChange(todo.todo_id)}
+                      />
+                      {todo.description}</li>
                   ))}
                 </ul>
               </td>
