@@ -91,7 +91,9 @@ app.get('/todolist/:id/todos', async (req, res) => {
       include: [
         {
           model: TodoList, // Include the TodoList model to retrieve additional details if needed
-          attributes: ['id', 'title'] // You can specify the attributes you want to retrieve for the TodoList
+          attributes: ['id', 'title'], // You can specify the attributes you want to retrieve for the TodoList
+          order: [['createdAt', 'ASC']]
+
         }
       ]
     });

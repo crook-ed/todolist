@@ -3,51 +3,46 @@
     display: flex;
     justify-content: space-around;
   }
-  
-  .todo-list {
-    margin: 10px;
-    padding: 10px;
+
+  .todo-lists-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+  }
+  .todo-table {
+    border-collapse: collapse;
+    border-spacing: 10px;
+    width: 100%;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    width: 300px;
+    table-layout: fixed;
+    
   }
+
+
+  .todo-table th, .todo-table td {
+    width: 200px; /* Set a fixed width for columns */
+  padding: 10px;
+  border: 1px solid #ccc;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; 
+  border-right: 75px solid transparent;
+}
   
-  .todo-list-header {
-    background-color: #4caf50;
-    color: white;
-    padding: 8px;
+  .todo-table th{
     text-align: center;
-    font-weight: bold;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    background-color: #bdbdbd;
+    
   }
-  
-  .todo-items {
-    display: flex;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 10px;
-    padding: 8px;
-    list-style: none;
-    align-items: flex-start;
-    justify-content: flex-start;
+  .todo-table th:last-child, .todo-table td:last-child {
+    border-right: none; /* Remove border-right for the last th in each row */
   }
-  
-  .todo-item {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    display: flex;
-    flex-direction:row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+  .todo-table td{
+    text-align: left;
+    background-color: #d5d5d5;
+
+
   }
-  
-  .todo-item-description {
-    flex: 1;
-    margin-bottom: 8px;
-  }
-  
   .add-todo-btn {
     background-color: #4caf50;
     color: white;
@@ -58,9 +53,16 @@
   }
   
   .ul{
-    list-style: none;
+    list-style-type: none;
+  padding: 0px;
   }
 
+  ul.ul li {
+    margin: 4px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+  }
   .centered {
     display: flex;
     justify-content: center;

@@ -135,6 +135,7 @@ const TodoApp = () => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="todo-app">
+      <div className="todo-lists-container">
         <table className="todo-table">
           <thead>
             <tr>
@@ -201,7 +202,7 @@ const TodoApp = () => {
             </tr>
           </tbody>
         </table>
-        <button className="add-list-btn" onClick={showModal}>
+        <button className="add-todo-btn" onClick={showModal}>
           + Add New List
         </button>
         <AddTodoListModal
@@ -209,6 +210,7 @@ const TodoApp = () => {
         isModalVisible={isModalVisible}
         handleCancel={handleCancel}
       />
+      </div>
     </div>
     </DragDropContext>
   );
