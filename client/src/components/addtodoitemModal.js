@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Modal, Button } from 'antd';
 
 
-const AddTodoListModal = ({ isModalVisible, handleCancel }) => {
+const AddTodoListItem = ({ isModalVisible, handleCancel }) => {
     const [title, setDescription] = useState("");
 
  
@@ -26,7 +26,7 @@ const AddTodoListModal = ({ isModalVisible, handleCancel }) => {
 
   return (
     <Modal
-      title="Add New Todo List"
+      title="Add New Todo Item"
       open={isModalVisible}
       onCancel={handleCancel}
       footer={[
@@ -47,4 +47,4 @@ const AddTodoListModal = ({ isModalVisible, handleCancel }) => {
   );
 };
 
-export default AddTodoListModal;
+export default AddTodoListItem;

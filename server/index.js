@@ -27,7 +27,8 @@ app.post('/todo-lists', async (req, res) => {
 app.get('/todolists', async (req, res) => {
   try {
     const todoLists = await TodoList.findAll({
-      include: { model: TodoItem }
+      include: { model: TodoItem },
+      order: [['createdAt', 'ASC']]
     });
     res.json(todoLists);
   } catch (error) {

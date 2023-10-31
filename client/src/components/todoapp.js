@@ -1,22 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import "../components/todoapp.css"
-import AddTodoListModal from './addlistModal';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../components/todoapp.css";
+import AddTodoListModal from "./addlistModal";
+import AddTodoItemModal from "./addtodoitemModal";
+
 const TodoApp = () => {
   const [todoLists, setTodoLists] = useState([]);
   const [todos, setTodos] = useState([]);
 
-
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isitemModalVisible, setIsitemModalVisible] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
+  };
+  const showitemModal = () => {
+    setIsitemModalVisible(true);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
- 
+  const handleitemCancel = () => {
+    setIsitemModalVisible(false);
+  };
 
   // const deleteTodo = async id => {
   //   try {
@@ -32,40 +39,42 @@ const TodoApp = () => {
 
   const handleTodoChange = async (todoId) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/todos/${todoId}`);
+      const response = await axios.delete(
+        `http://localhost:5000/todos/${todoId}`
+      );
       if (response.status === 200) {
-        const updatedTodoLists = todoLists.map(list => ({
+        const updatedTodoLists = todoLists.map((list) => ({
           ...list,
-          todos: list.todos.filter(todo => todo.todo_id !== todoId)
+          todos: list.todos.filter((todo) => todo.todo_id !== todoId),
         }));
         setTodoLists(updatedTodoLists);
       }
     } catch (error) {
-      console.error('Error deleting todo item:', error);
+      console.error("Error deleting todo item:", error);
     }
   };
-  
+
   useEffect(() => {
-    axios.get('http://localhost:5000/todolists')
+    axios
+      .get("http://localhost:5000/todolists")
       .then((response) => {
         setTodoLists(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching todo lists:', error);
+        console.error("Error fetching todo lists:", error);
       });
   }, []);
 
-
   useEffect(() => {
-    axios.get('http://localhost:5000/todos')
+    axios
+      .get("http://localhost:5000/todos")
       .then((response) => {
         setTodos(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching todo items:', error);
+        console.error("Error fetching todo items:", error);
       });
   }, []);
- 
 
   return (
     <div className="todo-app">
@@ -88,9 +97,19 @@ const TodoApp = () => {
                         type="checkbox"
                         onChange={() => handleTodoChange(todo.todo_id)}
                       />
-                      {todo.description}</li>
+                      {todo.description}
+                    </li>
                   ))}
                 </ul>
+                {list.todos.length > 0 && (
+                  <div className="centered">
+                    <button onClick={showitemModal}>Add a todo</button>
+                    <AddTodoItemModal
+                      isModalVisible={isitemModalVisible}
+                      handleCancel={handleitemCancel}
+                    />
+                  </div>
+                )}
               </td>
             ))}
           </tr>
@@ -98,7 +117,7 @@ const TodoApp = () => {
       </table>
       <button className="add-list-btn" onClick={showModal}>
         + Add New List
-      </button> 
+      </button>
       <AddTodoListModal
         isModalVisible={isModalVisible}
         handleCancel={handleCancel}
