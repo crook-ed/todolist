@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../components/todoapp.css";
+import "./todoapp.css";
 import AddTodoListModal from "./addlistModal";
 import AddTodoItemModal from "./addtodoitemModal";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -45,7 +45,7 @@ const TodoApp = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/todolists")
+      .get("http://localhost:5000/auth/dashboardtodolists")
       .then((response) => {
         setTodoLists(response.data);
       })

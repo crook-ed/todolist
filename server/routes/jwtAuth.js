@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const users  = require("../database.js");
+const users  = require("../usersDatabase.js");
 const bcrypt = require("bcrypt");
 const jwtGenerator = require("../utils/jwtGenerator.js");
 const validInfo = require("../middleware/validInfo.js");
@@ -81,7 +81,7 @@ router.post("/login" , validInfo,  async(req, res) => {
         const token = jwtGenerator(user.id);
 
         res.json({token});
-    } catch (error) {
+    } catch (err) {
         console.error(err.message);
         res.status(500).send("Server error");
     }

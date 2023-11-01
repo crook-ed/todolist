@@ -1,6 +1,5 @@
 const { Sequelize } = require("sequelize");
 const pool = require('./db');
-const TodoItem = require('./todoItemDatabase');
 const Users = require('./usersDatabase');
 
 const TodoList = pool.define('todoLists', {
@@ -26,6 +25,14 @@ const TodoList = pool.define('todoLists', {
       key: 'id' // The actual primary key of the TodoList
     }
   }
+});
+
+TodoList.belongsTo(Users, {
+  foreignKey: 'users_id' // Assuming 'todoListId' is the foreign key in todos referencing TodoList
+});
+
+Users.hasMany(TodoList, {
+  foreignKey: 'users_id' // Assuming 'todoListId' is the foreign key in TodoItem
 });
 
 // TodoList.hasMany(TodoItem, {

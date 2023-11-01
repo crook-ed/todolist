@@ -5,7 +5,7 @@ const TodoItem = require("../todoItemDatabase");
 const TodoList = require("../todoListDatabase")
 
 //get whole todolist
-router.get("/", authorization, async (req, res) => {
+router.get("/todolists", authorization, async (req, res) => {
     try {
       // Fetch the user's details
       const user = await users.findOne({
@@ -20,7 +20,7 @@ router.get("/", authorization, async (req, res) => {
         // Fetch the to-do lists for the authenticated user
         const todoLists = await TodoList.findAll({
           where: {
-            user_id: user.id, // Assuming user ID field in the TodoList model is user_id
+            users_id: user.id, // Assuming user ID field in the TodoList model is user_id
           },
           include: { model: TodoItem },
           order: [["createdAt", "ASC"]],
@@ -48,9 +48,9 @@ router.get("/", authorization, async (req, res) => {
       // Create a new to-do list associated with the authenticated user
       const newTodoList = await TodoList.create({
         title,
-        user_id: userId, // Assuming user ID field in the TodoList model is user_id
+        users_id: userId, // Assuming user ID field in the TodoList model is user_id
       });
-  
+      console.log(newTodoList.title);
       res.json(newTodoList);
     } catch (error) {
       console.error(error.message);
@@ -68,7 +68,7 @@ router.get('/todolists/:id/todos', authorization, async (req, res) => {
       const todosForTodoList = await TodoItem.findAll({
         where: {
           id: todoListId, // Filter by the TodoList ID
-          user_id: userId // Filter by the authenticated user's ID to ensure authorization
+          users_id: userId // Filter by the authenticated user's ID to ensure authorization
         },
         include: [
           {
@@ -100,7 +100,7 @@ router.put('/todos/:todoId/move', authorization, async (req, res) => {
       const todoItem = await TodoItem.findOne({
         where: {
           id: todoId,
-          user_id: userId // Ensure the to-do item belongs to the authenticated user
+          users_id: userId // Ensure the to-do item belongs to the authenticated user
         }
       });
   
@@ -128,7 +128,7 @@ router.delete('/todos/:id', authorization, async (req, res) => {
       const deletedRowsCount = await TodoItem.destroy({
         where: {
           todo_id: id,
-          user_id: userId // Ensure the to-do item belongs to the authenticated user
+          users_id: userId // Ensure the to-do item belongs to the authenticated user
         }
       });
   
