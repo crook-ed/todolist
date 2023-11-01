@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 const pool = require('./db');
 const TodoItem = require('./todoItemDatabase');
-
+const Users = require('./usersDatabase');
 
 const TodoList = pool.define('todoLists', {
     
@@ -16,6 +16,15 @@ const TodoList = pool.define('todoLists', {
   title: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+
+  users_id: {
+    type: Sequelize.INTEGER, // Or the appropriate data type matching the TodoList's primary key
+    allowNull: false,
+    references: {
+      model: Users, // Reference to the TodoList model
+      key: 'id' // The actual primary key of the TodoList
+    }
   }
 });
 

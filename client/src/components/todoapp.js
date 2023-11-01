@@ -155,7 +155,10 @@ const TodoApp = () => {
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                       >
-                        {list.todos.map((todo, index) => (
+                        {list.todos
+                        .slice() // Create a copy of the array
+                        .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) // Sort by createdAt ascending
+                        .map((todo, index) => (
                           <Draggable
                             draggableId={todo.todo_id.toString()}
                             index={index}
