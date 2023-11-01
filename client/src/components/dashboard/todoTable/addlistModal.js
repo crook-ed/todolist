@@ -10,9 +10,10 @@ const AddTodoListModal = ({ isModalVisible, handleCancel }) => {
         e.preventDefault();
     try {
       const body = { title };
-      const response = await fetch("http://localhost:5000/todo-lists", {
+      const response = await fetch("http://localhost:5000/dashboard/todo-lists", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" ,  "token": localStorage.token
+      },
         body: JSON.stringify(body)
       });
 

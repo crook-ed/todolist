@@ -45,9 +45,11 @@ const TodoApp = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/dashboardtodolists")
+      .get("http://localhost:5000/dashboard/todolists" , {
+        headers: {token: localStorage.token}
+      })
       .then((response) => {
-        setTodoLists(response.data);
+        setTodoLists(response.data.todoLists);
       })
       .catch((error) => {
         console.error("Error fetching todo lists:", error);
@@ -90,11 +92,11 @@ const TodoApp = () => {
   
       // Make a PUT request to the backend API to move the todo item
       const response = await fetch(
-        `http://localhost:5000/todos/${todoItemId}/move`,
+        `http://localhost:5000/dashboard/todos/${todoItemId}/move`,
         {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json',"token": localStorage.token
           },
           body: JSON.stringify({ targetTodoListId }),
         }
@@ -156,8 +158,7 @@ const TodoApp = () => {
                         {...provided.droppableProps}
                       >
                         {list.todos
-                        .slice() // Create a copy of the array
-                        .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) // Sort by createdAt ascending
+                        
                         .map((todo, index) => (
                           <Draggable
                             draggableId={todo.todo_id.toString()}

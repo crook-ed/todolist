@@ -37,7 +37,7 @@ router.get("/todolists", authorization, async (req, res) => {
     }
   });
   
-//create todolist
+//create todolist 
   router.post('/todo-lists', authorization, async (req, res) => {
     try {
       const { title } = req.body;
@@ -99,8 +99,8 @@ router.put('/todos/:todoId/move', authorization, async (req, res) => {
       // Find the to-do item for the given user
       const todoItem = await TodoItem.findOne({
         where: {
-          id: todoId,
-          users_id: userId // Ensure the to-do item belongs to the authenticated user
+          todo_id: todoId
+           // Ensure the to-do item belongs to the authenticated user
         }
       });
   
@@ -137,6 +137,27 @@ router.delete('/todos/:id', authorization, async (req, res) => {
       } else {
         res.status(404).json("Todo not found or unauthorized");
       }
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ error: 'Server Error' });
+    }
+  });
+  
+
+  // API endpoint to add a to-do item to a specific to-do list of the logged-in user
+router.post('/todo-lists/:id/todos', authorization, async (req, res) => {
+    try {
+      const userId = req.user.id; // Extract the user ID from the authenticated request
+      const  id  = req.body.id; // Extract the to-do list ID from the request parameters
+      const   description  = req.body.description; // Assuming title and description are sent in the request body
+  
+      // Create the to-do item associated with the authenticated user and specific to-do list
+      const newTodoItem = await TodoItem.create({
+        description: description,
+        todolistid: id, // Assuming 'todolistid' is the foreign key in TodoItem referencing TodoList
+      });
+  
+      res.json(newTodoItem);
     } catch (error) {
       console.error(error.message);
       res.status(500).json({ error: 'Server Error' });

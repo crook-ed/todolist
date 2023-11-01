@@ -9,7 +9,7 @@ const Dashboard = ({setAuth}) => {
           const res = await fetch("http://localhost:5000/dashboard/", {
             method: "GET",
             headers: {  token: localStorage.token }
-          });
+          }); 
     
           const parseData = await res.json();
           setName(parseData.user_name);
