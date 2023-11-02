@@ -10,37 +10,40 @@
     padding: 20px;
   }
   .todo-table {
-    border-collapse: collapse;
-    border-spacing: 10px;
+    border-collapse: separate;
+    border-spacing: 20px;
     width: 100%;
     border: 1px solid #ccc;
     table-layout: fixed;
     
   }
 
-
+  
   .todo-table th, .todo-table td {
-    width: 200px; /* Set a fixed width for columns */
-  padding: 10px;
-  border: 1px solid #ccc;
-  white-space: nowrap; /* Prevent text wrapping */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; 
-  border-right: 75px solid transparent;
+    width: 300px; /* Set a fixed width for columns */
+    min-width: 200px; /* Ensure columns don't shrink below this width */
+    padding: 10px;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis;
 }
   
   .todo-table th{
     text-align: center;
     background-color: #bdbdbd;
-    
+    border-bottom: none;
+
   }
-  .todo-table th:last-child, .todo-table td:last-child {
-    border-right: none; /* Remove border-right for the last th in each row */
-  }
+
+  .todo-table th + th,
+.todo-table td + td {
+  border-left: none; /* Remove border between th and td */
+}
+  
   .todo-table td{
     text-align: left;
     background-color: #d5d5d5;
-
+    border-top: none;
 
   }
   .add-todo-btn {

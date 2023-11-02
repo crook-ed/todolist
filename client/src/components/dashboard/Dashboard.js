@@ -34,8 +34,8 @@ const Dashboard = ({setAuth}) => {
       <h2>Welcome {name}</h2>
       <button onClick={logout} className="btn btn-primary">
         Logout
-      </button><br></br>
-<TodoApp/>
+      </button><div>
+<TodoApp/></div>
         </>
     );
 };
