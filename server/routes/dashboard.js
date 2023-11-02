@@ -127,8 +127,8 @@ router.delete('/todos/:id', authorization, async (req, res) => {
       // Delete the to-do item for the specific user
       const deletedRowsCount = await TodoItem.destroy({
         where: {
-          todo_id: id,
-          users_id: userId // Ensure the to-do item belongs to the authenticated user
+          todo_id: id
+         // Ensure the to-do item belongs to the authenticated user
         }
       });
   

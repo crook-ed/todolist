@@ -29,7 +29,13 @@ const TodoApp = () => {
   const handleTodoDelete = async (todoId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/todos/${todoId}`
+        `http://localhost:5000/dashboard/todos/${todoId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            "token": localStorage.token
+          }
+        }
       );
       if (response.status === 200) {
         const updatedTodoLists = todoLists.map((list) => ({
