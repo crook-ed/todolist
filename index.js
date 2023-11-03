@@ -2,10 +2,20 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const db = require('./db');
+const path = require("path");
+
+const PORT = process.env.PORT || 5000 ;
 
 app.use(cors());
 app.use(express.json()); //req.body
 
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, "client/build")));
+};
+
+console.log(__dirname);
+console.log(path.join(__dirname, "client/build"));
 
 
 app.use("/auth", require("./routes/jwtAuth"));
@@ -17,8 +27,11 @@ db.authenticate()
     .then(() => console.log('databse connected...'))
     .catch(err => console.log('Error: ' + err));
 
+    
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build/index.html"));
+});
 
-
-app.listen(5000 , () => {
-    console.log("Server is starting on port 5000")
+app.listen(PORT , () => {
+    console.log(`Server is starting on port ${PORT}`)
 });
