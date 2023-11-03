@@ -3,11 +3,13 @@ const app = express();
 const cors = require("cors");
 const db = require('./db');
 const path = require("path");
+require("dotenv").config();
 
 const PORT = process.env.PORT || 5000 ;
 
 app.use(cors());
 app.use(express.json()); //req.body
+
 
 
 if(process.env.NODE_ENV === "production"){
