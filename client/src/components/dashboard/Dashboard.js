@@ -1,12 +1,13 @@
 import React, {useState , useEffect}  from 'react';
 import TodoApp from './todoTable/todoapp';
+import {BASE_URL} from "client/src/helper.js"
 const Dashboard = ({setAuth}) => {
 
     const [name, setName] = useState("");
 
     const getProfile = async () => {
         try {
-          const res = await fetch("http://localhost:5000/dashboard/", {
+          const res = await fetch(`${BASE_URL}/dashboard/`, {
             method: "GET",
             headers: {  token: localStorage.token }
           }); 

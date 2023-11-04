@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Modal, Button } from 'antd';
+import {BASE_URL} from "client/src/helper.js";
 
 
 const AddTodoListModal = ({ isModalVisible, handleCancel }) => {
@@ -10,7 +11,7 @@ const AddTodoListModal = ({ isModalVisible, handleCancel }) => {
         e.preventDefault();
     try {
       const body = { title };
-      const response = await fetch("http://localhost:5000/dashboard/todo-lists", {
+      const response = await fetch(`${BASE_URL}/dashboard/todo-lists`, {
         method: "POST",
         headers: { "Content-Type": "application/json" ,  "token": localStorage.token
       },

@@ -1,5 +1,6 @@
 import React , {useState} from 'react';
 import { Link } from 'react-router-dom';
+import {BASE_URL} from "./helper"
 
 
 const Login = ({ setAuth }) => {
@@ -23,7 +24,7 @@ const onSubmitForm = async e => {
     try {
         const body = { email, password};
         const response = await fetch(
-            "http://localhost:5000/auth/login",
+            `${BASE_URL}/auth/login`,
             {
             method: "POST",
             headers: {

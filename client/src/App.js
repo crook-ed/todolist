@@ -5,6 +5,7 @@ import Dashboard from "./components/dashboard/Dashboard.js";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Landing from "./components/Landing";
+import {BASE_URL} from "./helper"
 
 
 import {
@@ -24,7 +25,7 @@ function App() {
 
     async function isAuth() {
         try {
-            const response = await fetch("http://localhost:5000/auth/is-verify", {
+            const response = await fetch(`${BASE_URL}/auth/is-verify`, {
             method: "GET",
             headers: {  token: localStorage.token }
           });

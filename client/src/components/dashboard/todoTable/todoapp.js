@@ -4,6 +4,8 @@ import "./todoapp.css";
 import AddTodoListModal from "./addlistModal";
 import AddTodoItemModal from "./addtodoitemModal";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {BASE_URL} from "client/src/helper.js";
+
 
 const TodoApp = () => {
   const [todoLists, setTodoLists] = useState([]);
@@ -29,7 +31,7 @@ const TodoApp = () => {
   const handleTodoDelete = async (todoId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/dashboard/todos/${todoId}`,
+        `${BASE_URL}/dashboard/todos/${todoId}`,
         {
           method: 'DELETE',
           headers: {
@@ -51,7 +53,7 @@ const TodoApp = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/dashboard/todolists" , {
+      .get(`${BASE_URL}/dashboard/todolists` , {
         headers: {token: localStorage.token}
       })
       .then((response) => {
@@ -64,7 +66,7 @@ const TodoApp = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/todos")
+      .get(`${BASE_URL}/todos`)
       .then((response) => {
         setTodos(response.data);
       })
@@ -98,7 +100,7 @@ const TodoApp = () => {
   
       // Make a PUT request to the backend API to move the todo item
       const response = await fetch(
-        `http://localhost:5000/dashboard/todos/${todoItemId}/move`,
+        `${BASE_URL}/dashboard/todos/${todoItemId}/move`,
         {
           method: 'PUT',
           headers: {
