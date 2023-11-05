@@ -15,14 +15,16 @@ const AddTodoListItem = ({ isModalVisible, handleCancel, passedValue }) => {
           headers: { "Content-Type": "application/json" ,"token": localStorage.token },
           body: JSON.stringify({ description: title, id:passedValue })
         });
-  
-        if (response.ok) {
-          // The item has been successfully added
-          // You might want to handle the response data here
-          window.location.reload(); // Refresh the page or update the state to show the new todo item
-        } else {
-          console.error('Failed to add a new todo item');
-        }
+
+
+        window.location = "/#/dashboard";
+        // if (response.ok) {
+        //   // The item has been successfully added
+        //   // You might want to handle the response data here
+        //   window.location.reload(); // Refresh the page or update the state to show the new todo item
+        // } else {
+        //   console.error('Failed to add a new todo item');
+        // }
       } catch (err) {
         console.error(err.message);
       }

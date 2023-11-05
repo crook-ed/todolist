@@ -18,7 +18,7 @@ const AddTodoListModal = ({ isModalVisible, handleCancel }) => {
         body: JSON.stringify(body)
       });
 
-      window.location = "/";
+      window.location = "/#/dashboard";
     } catch (err) {
       console.error(err.message);
     }
