@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Modal, Button } from 'antd';
-import {BASE_URL} from "..../services/helper.js"
+import {BASE_URL} from "../helpers"
 
 
 const AddTodoListModal = ({ isModalVisible, handleCancel }) => {

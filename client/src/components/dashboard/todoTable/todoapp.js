@@ -4,7 +4,7 @@ import "./todoapp.css";
 import AddTodoListModal from "./addlistModal";
 import AddTodoItemModal from "./addtodoitemModal";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import {BASE_URL} from "..../services/helper.js"
+import {BASE_URL} from "../helpers"
 
 
 const TodoApp = () => {
