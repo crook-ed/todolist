@@ -1,6 +1,6 @@
 import React, {useState , useEffect}  from 'react';
 import TodoApp from './todoTable/todoapp';
-import {BASE_URL} from "client/src/helper.js"
+import {BASE_URL} from ".../services/helper.js";
 const Dashboard = ({setAuth}) => {
 
     const [name, setName] = useState("");
