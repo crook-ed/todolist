@@ -64,7 +64,7 @@ const onSubmitForm = async e => {
           className="form-control my-3"
           placeholder="password"
         />
-        <button className="btn btn-success btn-block" type="submit">
+        <button className="btn btn-success btn-block" type="submit" onClick={onSubmitForm}>
           Submit
         </button>
       </form>
